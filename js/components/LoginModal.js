@@ -32,9 +32,14 @@ const LoginModal = Form.create()(
         if (this.state.username === '' || this.state.password === '')   return;
 
         console.log('postluyoruz:', this.state);
-        axios.post('http://localhost:5000/login', {
-          username: this.state.username,
-          password: this.state.password
+        let formData = new FormData();
+        formData.set('username', this.state.username);
+        formData.set('password', this.state.password);
+        axios({
+            method: 'post',
+            url: 'http://localhost:5000/login',
+            data: formData,
+            config: { headers: {'Content-Type': 'multipart/form-data' }}
         }).then(res => {
           console.log(res);
           this.cleanForm();

@@ -1,6 +1,8 @@
 from flask import Flask, render_template, request, jsonify
-import services
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
+from services import auth, posting
+import json
+
 
 app = Flask(__name__)
 CORS(app)
@@ -20,7 +22,7 @@ def register():
     # TODO: GSM
     # todo: get_messages field ?
 
-    response = services.auth.register_user(username, password)
+    response = auth.register_user(username, password)
     return jsonify(response)
 
 
@@ -30,7 +32,7 @@ def login():
     username = request.form.get('username', type=str)
     password = request.form.get('password', type=str)
 
-    response = services.auth.get_user(username, password)
+    response = auth.get_user(username, password)
     return jsonify(response)
 
 
@@ -53,8 +55,8 @@ def posting_ops():
         age = request.form.get('age', type=int)
         expiration_time = request.form.get('expiration_time', type=int)
 
-        services.posting.add_posting(username, room, saloon, address, building_type, post_type, starting_bid, size,
-                                     floor, age, expiration_time)
+        posting.add_posting(username, room, saloon, address, building_type, post_type, starting_bid, size,
+                            floor, age, expiration_time)
 
 
 if __name__ == '__main__':

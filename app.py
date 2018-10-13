@@ -41,6 +41,7 @@ def posting_ops():
         pass
     else:
         # todo: check username-password is in db
+        # TODO: recommend starting bid !!
         username = request.headers.get('username')
 
         room = request.form.get('room', type=int)
@@ -52,12 +53,11 @@ def posting_ops():
         post_type = request.form.get('post_type', type=str)
         starting_bid = request.form.get('starting_bid', type=int)
         size = request.form.get('size', type=int)
-        floor = request.form.get('floor', type=int)
         age = request.form.get('age', type=int)
         expiration_time = request.form.get('expiration_time', type=int)
 
         posting.add_posting(username, room, saloon, address, lat, lng, building_type, post_type, starting_bid, size,
-                            floor, age, expiration_time)
+                            age, expiration_time)
 
 
 if __name__ == '__main__':

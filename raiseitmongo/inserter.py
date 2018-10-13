@@ -10,7 +10,7 @@ def insert_one_user(username, password, credit):
 
 
 def insert_one_posting(username, room, saloon, address, lat, lng, building_type, post_type, starting_bid, size,
-                       floor, age, expiration_time, current_bid, current_bidder, bid_count):
+                       age, expiration_time, current_bid, current_bidder, bid_count):
     db.postings.insert_one({
         'username': username,
         'building_type': building_type,
@@ -21,10 +21,9 @@ def insert_one_posting(username, room, saloon, address, lat, lng, building_type,
         'lat': lat,
         'lng': lng,
         'size': size,
-        'floor': floor,
         'age': age,
         'starting_bid': starting_bid,
-        'expiration_age': expiration_time,
+        'expiration_time': expiration_time,
         'current_bid': current_bid,
         'current_bidder': current_bidder,
         'bid_count': bid_count

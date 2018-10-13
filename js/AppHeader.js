@@ -85,7 +85,6 @@ class AppHeader extends Component {
         />
       </div>
     );
-
   }
 }
 export default AppHeader;

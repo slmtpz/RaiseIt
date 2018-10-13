@@ -1,6 +1,8 @@
+import urllib
+import os
 MONGO = {
-    'USERNAME': '',
-    'PASSWORD': '',
-    'HOSTPORT': '',
-    'DATABASE': ''
+    'USERNAME': os.environ['MONGO_USERNAME'],
+    'PASSWORD': urllib.parse.quote(os.environ['MONGO_PASSWORD']),
+    'HOSTPORT': os.environ['MONGO_HOSTPORT'],
+    'DATABASE': os.environ['MONGO_DATABASE']
 }

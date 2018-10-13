@@ -31,6 +31,7 @@ const SignUpModal = Form.create()(
       validateForm() {
         if (this.state.username === '' || this.state.password === '')   return;
         
+        console.log('signup postluyoruz', this.state);
         axios.post('http://localhost:5000/register', {
           username: this.state.username,
           password: this.state.password

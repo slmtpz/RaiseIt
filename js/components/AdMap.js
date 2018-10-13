@@ -17,7 +17,6 @@ const AdMap = withScriptjs(withGoogleMap((props) =>{
 		});
 		++tooltipIndex;
 		tooltipBlock = '';
-
     } */
 	
   const markers = markerTemplates.map(template => (

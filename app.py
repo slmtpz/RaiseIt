@@ -1,18 +1,32 @@
-from flask import Flask, render_template
-from flask_pymongo import PyMongo
-import config
+from flask import Flask, render_template, request, jsonify
+from services import auth
 
 app = Flask(__name__)
-app.config["MONGO_URI"] = "mongodb://%s:%s@%s/%s" % (config.MONGO['USERNAME'],
-                                                     config.MONGO['PASSWORD'],
-                                                     config.MONGO['HOSTPORT'],
-                                                     config.MONGO['DATABASE'])
-mongo = PyMongo(app)
 
 
 @app.route('/')
 def main_page():
     return render_template('index.html')
+
+
+@app.route('/register', methods=['POST'])
+def register():
+    username = request.form.get('username', type=str)
+    password = request.form.get('password', type=str)
+    # todo: get_messages field ?
+
+    response = auth.register_user(username, password)
+    return jsonify(response)
+
+
+@app.route('/login', methods=['POST'])
+def login():
+    # todo: tokenization
+    username = request.form.get('username', type=str)
+    password = request.form.get('password', type=str)
+
+    response = auth.get_user(username, password)
+    return jsonify(response)
 
 
 if __name__ == '__main__':

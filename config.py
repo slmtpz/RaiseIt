@@ -6,3 +6,4 @@ MONGO = {
     'HOSTPORT': os.environ['MONGO_HOSTPORT'],
     'DATABASE': os.environ['MONGO_DATABASE']
 }
+MONGO_URI = "mongodb://%s:%s@%s/%s" % (MONGO['USERNAME'], MONGO['PASSWORD'], MONGO['HOSTPORT'], MONGO['DATABASE'])

@@ -31,7 +31,8 @@ const LoginModal = Form.create()(
       validateForm() {
         if (this.state.username === '' || this.state.password === '')   return;
 
-        axios.post('localhost:5000/login', {
+        console.log('postluyoruz:', this.state);
+        axios.post('http://localhost:5000/login', {
           username: this.state.username,
           password: this.state.password
         }).then(res => {

@@ -1,5 +1,13 @@
 from flask import Flask, render_template
+from flask_pymongo import PyMongo
+import config
+
 app = Flask(__name__)
+app.config["MONGO_URI"] = "mongodb://%s:%s@%s/%s" % (config.MONGO['USER_NAME'],
+                                                     config.MONGO['PASSWORD'],
+                                                     config.MONGO['URL'],
+                                                     config.MONGO['DATABASE'])
+mongo = PyMongo(app)
 
 
 @app.route('/')

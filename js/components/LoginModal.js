@@ -4,7 +4,7 @@ import axios from 'axios';
 
 const FormItem = Form.Item;
 
-const SignUpModal = Form.create()(
+const LoginModal = Form.create()(
     class extends React.Component {
       constructor(props) {
         super(props);
@@ -30,8 +30,8 @@ const SignUpModal = Form.create()(
 
       validateForm() {
         if (this.state.username === '' || this.state.password === '')   return;
-        
-        axios.post('localhost:5000/register', {
+
+        axios.post('localhost:5000/login', {
           username: this.state.username,
           password: this.state.password
         }).then(res => {
@@ -52,8 +52,8 @@ const SignUpModal = Form.create()(
         return (
           <Modal
             visible={visible}
-            title="Sign Up Now!"
-            okText="Sign Up"
+            title="Login"
+            okText="Log in"
             cancelText='Cancel'
             onCancel={this.closeForm}
             onOk={this.validateForm}
@@ -64,7 +64,7 @@ const SignUpModal = Form.create()(
                   rules: [{ required: true, message: 'Please input a username!' }]
                 })(
                   <Input
-                    placeholder='Username' 
+                    placeholder='Username'
                     onChange={e => this.onInputChange('username', e)} />
                 )}
               </FormItem>
@@ -74,8 +74,8 @@ const SignUpModal = Form.create()(
                 })(
                   <Input
                     placeholder='Password'
-                    type="password"  
-                    onChange={e => this.onInputChange('password', e)} />  
+                    type="password"
+                    onChange={e => this.onInputChange('password', e)} />
                 )}
               </FormItem>
             </Form>
@@ -85,4 +85,4 @@ const SignUpModal = Form.create()(
     }
 );
 
-export default SignUpModal;
+export default LoginModal;

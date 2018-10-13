@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { Layout, Menu, Breadcrumb, Icon, Button } from 'antd';
 
 import SignUpModal from './components/SignUpModal';
+import LoginModal from './components/LoginModal';
 const { Header, Content} = Layout;
 const NAVBAR_HEIGHT = '64px';
 
@@ -16,20 +17,40 @@ class AppHeader extends Component {
       loggedIn: false
     }
 
-    this.onFormOk = this.onFormOk.bind(this);
-    this.onFormCancel = this.onFormCancel.bind(this); 
+    this.onSignUpFormOk = this.onSignUpFormOk.bind(this);
+    this.onSignUpFormCancel = this.onSignUpFormCancel.bind(this);
+    this.onLoginFormOk = this.onLoginFormOk.bind(this); 
+    this.onLoginFormCancel = this.onLoginFormCancel.bind(this);
     this.menuClicked = this.menuClicked.bind(this);
   }
 
-  onFormOk() { this.setState({signupModalVisible: false}); }
+  onSignUpFormOk(result) {
+    this.setState({
+      signupModalVisible: false,
+      loggedIn: true
+    });
+    // REDIRECT TO HOME PAGE.
+  }
 
-  onFormCancel() { this.setState({signupModalVisible: false}); }
+  onSignUpFormCancel() { this.setState({signupModalVisible: false}); }
+
+  onLoginFormOk(result) {
+    this.setState({
+      loginModalVisible: false,
+      loggedIn: true
+    });
+    // REDIRECT TO HOME PAGE.
+  }
+
+  onLoginFormCancel() { this.setState({loginModalVisible: false}); }
+
 
   menuClicked({item, key, keyPath}) {
-    console.log('item', item);
-    console.log('key', key);
-    console.log('keyPath', keyPath);
     if (key === 'signup') {console.log('set sign up visible'); this.setState({signupModalVisible: true})};
+    if (key === 'login')  {console.log('set sign up visible'); this.setState({loginModalVisible: true})};
+    if (key === 'logout') {
+      // LOG THE USER OUT
+    }
   }
 
   render () {
@@ -52,10 +73,15 @@ class AppHeader extends Component {
         </Header>
         
         <SignUpModal
-          // wrappedComponentRef={this.saveFormRef}
           visible={this.state.signupModalVisible}
-          onCancel={this.onFormOk}
-          onCreate={this.onFormCancel}
+          onOk={this.onSignUpFormOk}
+          onCancel={this.onSignUpFormCancel}
+        />
+
+        <LoginModal
+          visible={this.state.loginModalVisible}
+          onOk={this.onLoginFormOk}
+          onCancel={this.onLoginFormCancel}
         />
       </div>
     );

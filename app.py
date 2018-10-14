@@ -5,7 +5,6 @@ from services import user, posting
 app = Flask(__name__)
 CORS(app)
 
-# todo: deposit endpoint
 # todo: redis?
 
 
@@ -47,7 +46,6 @@ def deposit_credits():
 @app.route('/posting', methods=['GET', 'POST'])
 def posting_ops():
     if request.method == 'GET':
-        # TODO: do not fetch users own postings
         postings = posting.get_all_postings()
         return jsonify({'postings': postings})
     else:

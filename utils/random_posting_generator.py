@@ -3,6 +3,10 @@ from utils.area.indices import df
 
 
 def generate():
+    """
+    This function is used to populate the collection with random postings.
+    """
+
     ROOMS = {1: 1, 2: 1.15, 3: 1.25, 4: 1.50}
     SALOONS = {1: 1, 2: 1.25}
     BUILDING_TYPES = {'Daire': 1, 'Residans': 1.5, 'Mustakil Ev': 2, 'Villa': 2.5}

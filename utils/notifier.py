@@ -10,10 +10,14 @@ class _Notifier:
 
 class Messenger(_Notifier):
     def _send_sms(self, phone, text):
-        self.client.api.account.messages.create(
-            to=phone,
-            from_=self.phone_number,
-            body=text)
+        try:
+            self.client.api.account.messages.create(
+                to=phone,
+                from_=self.phone_number,
+                body=text)
+        except:
+            print('Fail on Twilio.')
+            pass
 
     def welcome_message(self, user_gsm, username):
         self._send_sms(user_gsm, "Welcome %s, we are happy to see you among us, let's RaiseIt together!, RaiseIt" % username)

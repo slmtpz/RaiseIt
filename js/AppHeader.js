@@ -66,6 +66,7 @@ class AppHeader extends Component {
     if (key === 'logout') { this.props.onUserLogOut() }
     if (key === 'deposit') { this.setState({depositModalVisible: true}); }
     if (key === 'createpost') { this.setState({postModalVisible: true}); }
+    // if (key === 'myposts') { this.props.changeDisplayMode('myposts'); }
     
   }
 
@@ -82,7 +83,7 @@ class AppHeader extends Component {
             style={{ lineHeight: NAVBAR_HEIGHT }}
           >
             <Menu.Item key="1"><Link to='/'>Home</Link></Menu.Item>
-            <Menu.Item key="2"><Link to='/posts'>Posts</Link></Menu.Item>
+            {user && <Menu.Item key="myposts"><Link to='/posts'>My Posts</Link></Menu.Item>}
             {!user && <Menu.Item style={{float: 'right'}} key='login'>Log In</Menu.Item> }
             {!user && <Menu.Item style={{float: 'right'}} key='signup'>Sign Up</Menu.Item> }
             {user && <Menu.Item style={{float: 'right'}} key='logout'>Log out</Menu.Item> }
@@ -92,7 +93,7 @@ class AppHeader extends Component {
             </Menu.Item>}
             {user && <Menu.Item
               style={{float: 'right'}}
-              key='createpost'>Create Ad<Icon type="plus-circle" theme="outlined" />
+              key='createpost'>Create Post<Icon type="plus-circle" theme="outlined" />
             </Menu.Item>}
             {user && <Menu.Item
               style={{float: 'right'}}

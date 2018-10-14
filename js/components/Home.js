@@ -18,7 +18,22 @@ class Home extends Component {
 
 	fetchAndUpdatePosts() {
 		requestHandler.get('/posting').then(e => {
-			this.setState({postings: e.data.postings});
+			let postings = e.data.postings
+			let username = localStorage.getItem('username');
+
+			console.log('HOME. initial posts', postings.length);
+			console.log('username', username)
+			console.log('display type', this.props.displayMode);
+			if (this.props.displayMode === 'myposts') {
+				postings = postings.filter((e) => e.username === username);
+			}
+
+			if (this.props.displayMode === 'allposts' && username) {
+				postings = postings.filter((e) => e.username !== username);
+			}
+			console.log('HOME. final posts', postings.length);
+
+			this.setState({postings: postings});
 		});
 	}
 	onRaiseClicked(raisedObject) {
@@ -42,13 +57,13 @@ class Home extends Component {
 	render(){
 		return (
 			<div style={{margin: "0px 15% 0px"}}>
-				<AdMap
+				{/* <AdMap
 					events={this.props.events}
 					googleMapURL={`https://maps.googleapis.com/maps/api/js?key=AIzaSyAdvV5oYS9vTziqOCBJ1oag-ABFsuenhBQ&v=3.exp&libraries=geometry,drawing,places`}
 					loadingElement={<div style={{ height: `100%` }} />}
 					containerElement={<div style={{height: `400px`}}/>}
 					mapElement={<div style={{ height: `100%` }} />}
-			    />
+			    /> */}
 				{this.state.postings.length > 0 &&
 				<TableWrap
 					onRaiseClicked={this.onRaiseClicked}

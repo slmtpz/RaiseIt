@@ -33,9 +33,10 @@ class TableWrap extends Component {
         data={this.props.data}
         columns={[
           {
-            Header: "Ad Info",
+            Header: "Post Info",
             columns: [
-              { Header: "Ad Type", accessor: "post_type", className: "center-aligned", width: 100 },
+              { Header: "Poster", accessor: "username", className: "center-aligned", width: 100 },
+              { Header: "Post Type", accessor: "post_type", className: "center-aligned", width: 100 },
               { Header: "Address", accessor: "address", className: "center-aligned" }
             ]
           },
@@ -60,12 +61,24 @@ class TableWrap extends Component {
               {
                 Header: "Current Bid",
                 accessor: "current_bid",
-                width: 200,
+                width: 100,
                 Cell: e => {
                   let currentBid = e.value
                   if (!currentBid) currentBid = 'ー'
                   return (<div>{currentBid}</div>);
                 },
+                className: "center-aligned"
+              },
+              {
+                Header: "Bid Count",
+                accessor: "bid_count",
+                width: 80,
+                className: "center-aligned"
+              },
+              {
+                Header: "Bidder",
+                accessor: "current_bidder",
+                width: 70,
                 className: "center-aligned"
               },
               {

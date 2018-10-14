@@ -15,10 +15,18 @@ class AppMain extends Component {
             render = {() => 
               (<Home 
                 updateUser={this.props.updateUser}
+                displayMode={"allposts"}
               />)
             }
           />
-          <Route exact path='/posts' component={Posts}/>
+          <Route exact path='/posts' 
+            render = {() => 
+              (<Home 
+                updateUser={this.props.updateUser}
+                displayMode={"myposts"}
+              />)
+            }
+          />
         </Switch>
       </main>
     );

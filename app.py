@@ -35,6 +35,15 @@ def login():
     return jsonify(response)
 
 
+@app.route('/deposit', methods=['POST'])
+def deposit_credits():
+    username = request.form.get('username', type=str)
+    amount = request.form.get('amount', type=int)
+
+    response = user.deposit_credits(username, amount)
+    return jsonify(response)
+
+
 @app.route('/posting', methods=['GET', 'POST'])
 def posting_ops():
     if request.method == 'GET':

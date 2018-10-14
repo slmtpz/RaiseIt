@@ -4,7 +4,7 @@ from variables import FACTORS
 
 
 def add_posting(username, room, saloon, address, building_type, post_type, starting_bid, size, age):
-    current_bid = starting_bid
+    current_bid = 0
     bid_count = 0
     current_bidder = None
     inserter.insert_one_posting(username, room, saloon, address, building_type, post_type, starting_bid, size,

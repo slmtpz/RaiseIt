@@ -13,10 +13,8 @@ def get_user_with_pass(username, password):
     return response
 
 
-def register_user(username, password):
-    # todo: is username unique field ? check to send fail status
-    initial_dummy_credit = 500000
-    inserter.insert_one_user(username, password, initial_dummy_credit)
+def register_user(username, password, gsm):
+    inserter.insert_one_user(username, password, gsm)
     return get_user(username)
 
 

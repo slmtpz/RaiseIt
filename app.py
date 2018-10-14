@@ -22,10 +22,9 @@ def main_page():
 def register():
     username = request.form.get('username', type=str)
     password = request.form.get('password', type=str)
-    # TODO: GSM
-    # todo: get_messages field ?
+    gsm = request.form.get('gsm', type=str)
 
-    response = user.register_user(username, password)
+    response = user.register_user(username, password, gsm)
     return jsonify(response)
 
 

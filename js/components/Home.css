@@ -12,3 +12,7 @@
 .ReactTable .-pagination .-btn {
     height: auto;
 }
+
+.center-aligned {
+    text-align: center;
+}

@@ -13,8 +13,7 @@ class Application extends Component {
 
     this.onUserLogin = this.onUserLogin.bind(this);
     this.onUserLogOut = this.onUserLogOut.bind(this);
-    // this.setLocalStorage = this.setLocalStorage.bind(this);
-    // this.checkLocalStorage = this.checkLocalStorage.bind(this);
+    this.updateUser = this.updateUser.bind(this);
   }
 
   checkLocalStorage() {
@@ -33,7 +32,6 @@ class Application extends Component {
   
   setLocalStorage(user) {
     for (let key in user) {
-      console.log('setliyoruz:', key, '->', user[key]);
       localStorage.setItem(key, user[key]);
     }
   }
@@ -60,10 +58,22 @@ class Application extends Component {
   }
 
   onUserLogin(user) {
+    console.log('APPLICATION., onUserLogin: user', user);    
     this.setState({user: user});
     this.setLocalStorage(user);
   }
 
+  updateUser() {
+    let user = this.checkLocalStorage();
+    if (!user)  return;
+    requestHandler.post('/login', {
+      username: user.username,
+      password: user.password
+    }).then(response =>{
+      this.setState({user: response.data});
+      this.setLocalStorage(user);
+    });
+  }
   render() {
     console.log('APPLICATION., render: state', this.state);
     return (
@@ -75,7 +85,9 @@ class Application extends Component {
             onUserLogin={this.onUserLogin}
           />
         </Layout>
-        <AppMain />
+        <AppMain
+          updateUser={this.updateUser}
+        />
       </div>
     );
   }

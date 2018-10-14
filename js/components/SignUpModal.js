@@ -1,6 +1,5 @@
 import React from 'react';
 import { Modal, Form, Input } from 'antd';
-import axios from 'axios';
 
 import requestHandler from './../RequestHandler';
 

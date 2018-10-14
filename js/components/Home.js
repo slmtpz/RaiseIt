@@ -12,16 +12,30 @@ class Home extends Component {
 		this.state = {
 			postings: [],
 		}
+		this.fetchAndUpdatePosts = this.fetchAndUpdatePosts.bind(this);
+		this.onRaiseClicked = this.onRaiseClicked.bind(this);
+	}
+
+	fetchAndUpdatePosts() {
+		requestHandler.get('/posting').then(e => {
+			this.setState({postings: e.data.postings});
+		});
+	}
+	onRaiseClicked(raisedObject) {
+		requestHandler.post('/raise',{
+			username: localStorage.getItem('username'),
+			bid_amount: raisedObject.minimum_bid,
+			posting_id: raisedObject._id
+		}).then(e => {
+			console.log('RAISE SONUCU:', e);
+ 			this.fetchAndUpdatePosts();
+			this.props.updateUser();
+		});
 	}
 
 	componentDidMount() {
-		requestHandler.get('/posting').then(e => {
-			// console.log(e.data.postings);
-			this.setState({postings: e.data.postings});
-		});
-		// console.log(localStorage.getItem('username'));
-		// localStorage.setItem('username', 'naber');
-		// localStorage.clear();
+		console.log('HOME. componentDidMount');
+		this.fetchAndUpdatePosts();
 	}
 
 
@@ -37,6 +51,7 @@ class Home extends Component {
 			    />
 				{this.state.postings.length > 0 &&
 				<TableWrap
+					onRaiseClicked={this.onRaiseClicked}
 					data={this.state.postings}
 				/>}
 				{/* TO DO: ADD LOADER. */}

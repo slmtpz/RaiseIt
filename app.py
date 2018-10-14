@@ -25,6 +25,7 @@ def register():
     gsm = request.form.get('gsm', type=str)
 
     response = user.register_user(username, password, gsm)
+    messenger.welcome_message(gsm, username)
     return jsonify(response)
 
 
@@ -80,7 +81,9 @@ def raise_ops():
     bid_amount = request.form.get('bid_amount', type=int)
     posting_id = request.form.get('posting_id', type=str)
 
-    result = posting.raise_bid_on_posting(username, bid_amount, posting_id)
+    result, old_bidder_gsm = posting.raise_bid_on_posting(username, bid_amount, posting_id)
+    if old_bidder_gsm:
+        messenger.bid_raised_message(old_bidder_gsm)
 
     return jsonify(result)
 

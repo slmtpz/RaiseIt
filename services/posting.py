@@ -35,6 +35,7 @@ def update_posting_for_raise(posting_id, bid_count, current_bid, current_bidder)
 def raise_bid_on_posting(username, bid_amount, posting_id):
     from .user import get_user, update_credits
     from reasons import REASONS
+    current_bidder_doc = {'gsm': None}
 
     # fetch corresponding user and posting documents from database
     user_doc = get_user(username)
@@ -42,12 +43,12 @@ def raise_bid_on_posting(username, bid_amount, posting_id):
 
     # check varying cases that should not be happening
     if user_doc['credit'] < bid_amount:
-        return {'code': 0, 'reason': REASONS[1000]}
+        return {'code': 0, 'reason': REASONS[1000]}, current_bidder_doc['gsm']
     if posting_doc['username'] == user_doc['username']:
-        return {'code': 0, 'reason': REASONS[1001]}
+        return {'code': 0, 'reason': REASONS[1001]}, current_bidder_doc['gsm']
     minimum_bid = helpers.get_minimum_bid_for_posting(posting_doc)
     if bid_amount < minimum_bid:
-        return {'code': 0, 'reason': REASONS[1002]}
+        return {'code': 0, 'reason': REASONS[1002]}, current_bidder_doc['gsm']
 
     # lower user's credits by bid amount
     update_credits(username, user_doc['credit'], -bid_amount)
@@ -68,4 +69,4 @@ def raise_bid_on_posting(username, bid_amount, posting_id):
     updated_posting_doc['minimum_bid'] = helpers.get_minimum_bid_for_posting(updated_posting_doc)
     updated_posting_doc['_id'] = str(updated_posting_doc['_id'])
 
-    return {'code': 1, 'posting': updated_posting_doc}
+    return {'code': 1, 'posting': updated_posting_doc}, current_bidder_doc['gsm']

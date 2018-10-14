@@ -1,3 +1,8 @@
+### Pisano Hackathon Project
+#### Group Name: SofaKingCool
+#### Group Members: Seleme Topuz - Orbay Altuntoprak
+#### Technologies: Python/Flask + React/Axios
+
 To build and run the project:
 ```
 pip install virtualenv

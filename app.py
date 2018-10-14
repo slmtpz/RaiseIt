@@ -1,9 +1,14 @@
 from flask import Flask, render_template, request, jsonify
 from flask_cors import CORS
 from services import user, posting
+from utils.notifier import Messenger
+from config import TWILIO
 
 app = Flask(__name__)
 CORS(app)
+
+messenger = Messenger(TWILIO['ACCOUNT_SID'], TWILIO['AUTH_TOKEN'], TWILIO['PHONE_NUMBER'])
+
 
 # todo: redis?
 
@@ -39,7 +44,8 @@ def deposit_credits():
     username = request.form.get('username', type=str)
     amount = request.form.get('amount', type=int)
 
-    response = user.deposit_credits(username, amount)
+    response, user_gsm = user.deposit_credits(username, amount)
+    messenger.deposit_message(user_gsm, amount)
     return jsonify(response)
 
 

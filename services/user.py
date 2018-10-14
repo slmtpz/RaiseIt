@@ -27,4 +27,4 @@ def update_credits(username, current_credits, credit_change):
 def deposit_credits(username, amount):
     user_doc = get_user(username)
     updater.update_user(username, {'credit': user_doc['credit'] + amount})
-    return {'code': 1}
+    return {'code': 1}, user_doc['gsm']

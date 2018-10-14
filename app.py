@@ -77,7 +77,7 @@ def estimate_value():
     age = request.form.get('age', type=int)
 
     estimation = posting.estimate_value(room, saloon, building_type, post_type, address, size, age, area_df)
-    return jsonify({'estimation': estimation})
+    return jsonify({'estimation': int(estimation)})
 
 
 @app.route('/posting', methods=['GET', 'POST'])

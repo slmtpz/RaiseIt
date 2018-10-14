@@ -1,0 +1,10 @@
+.home-grid {
+    display: grid !important;
+    
+    /* geometry */
+    margin: 0px 18% 0px;
+    height: 93vh;
+    
+    grid-template-rows: 40% 60%;
+
+}

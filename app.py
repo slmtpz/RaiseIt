@@ -38,11 +38,12 @@ def login():
 @app.route('/posting', methods=['GET', 'POST'])
 def posting_ops():
     if request.method == 'GET':
-        pass
+        postings = posting.get_all_postings()
+        return jsonify({'postings': postings})
     else:
         # todo: check username-password is in db
         # TODO: recommend starting bid !!
-        username = request.headers.get('username')
+        username = request.form.get('username')
 
         room = request.form.get('room', type=int)
         saloon = request.form.get('saloon', type=int)

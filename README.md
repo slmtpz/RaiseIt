@@ -80,3 +80,4 @@ export TWILIO_ACCOUNT_SID=''; export TWILIO_AUTH_TOKEN=''; export TWILIO_PHONE_N
 - Localization can be done for website usage and SMS's.
 - Live auctions can be stored in *redis* for scalability.
 - Filtering future can be added for postings.
+- Finish an auction when it is expired.

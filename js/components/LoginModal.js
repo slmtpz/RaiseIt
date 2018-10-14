@@ -2,13 +2,16 @@ import React from 'react';
 import { Modal, Form, Input } from 'antd';
 import axios from 'axios';
 
+import requestHandler from './../RequestHandler';
+
+
 const FormItem = Form.Item;
 
 const LoginModal = Form.create()(
     class extends React.Component {
       constructor(props) {
         super(props);
-        this.state = { username: '', password: '' }
+        this.state = { username: '', password: ''}
         this.onInputChange = this.onInputChange.bind(this);
         this.validateForm = this.validateForm.bind(this);
         this.closeForm = this.closeForm.bind(this);
@@ -31,20 +34,14 @@ const LoginModal = Form.create()(
       validateForm() {
         if (this.state.username === '' || this.state.password === '')   return;
 
-        console.log('postluyoruz:', this.state);
-        let formData = new FormData();
-        formData.set('username', this.state.username);
-        formData.set('password', this.state.password);
-        axios({
-            method: 'post',
-            url: 'http://localhost:5000/login',
-            data: formData,
-            config: { headers: {'Content-Type': 'multipart/form-data' }}
+        console.log('login postluyoruz:', this.state);
+        requestHandler.post('/login', {
+          username: this.state.username,
+          password: this.state.password
         }).then(res => {
-          console.log(res);
           this.cleanForm();
-          this.props.onOk(res);
-        });
+          this.props.onOk(res.data);
+        })
       }
 
       closeForm() {

@@ -8,3 +8,7 @@
     grid-template-rows: 40% 60%;
 
 }
+
+.ReactTable .-pagination .-btn {
+    height: auto;
+}

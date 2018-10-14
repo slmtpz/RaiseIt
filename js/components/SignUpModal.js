@@ -2,6 +2,9 @@ import React from 'react';
 import { Modal, Form, Input } from 'antd';
 import axios from 'axios';
 
+import requestHandler from './../RequestHandler';
+
+
 const FormItem = Form.Item;
 
 const SignUpModal = Form.create()(
@@ -15,35 +18,41 @@ const SignUpModal = Form.create()(
         this.cleanForm = this.cleanForm.bind(this);
       }
 
-      onInputChange(fieldName, e) { this.setState({[fieldName]: e.target.value}); }
+      onInputChange(fieldName, e) {
+        let value = e.target.value;
+        console.log(fieldName, value, value.length);
+        if (fieldName === 'gsm' && value.length === 1 && value[0] != '+') {
+          value = '+90' + value;
+        }
+        this.setState({[fieldName]: value});
+        return value;
+      }
 
       cleanForm() {
         this.setState({
           username: '',
-          password: ''
+          password: '',
+          gsm: ''
         });
         this.props.form.setFieldsValue({
           username: '',
-          password: ''
+          password: '',
+          gsm: ''
         })
       }
 
       validateForm() {
         if (this.state.username === '' || this.state.password === '')   return;
         
+        
         console.log('signup postluyoruz', this.state);
-        let formData = new FormData();
-        formData.set('username', this.state.username);
-        formData.set('password', this.state.password);
-        axios({
-            method: 'post',
-            url: 'http://localhost:5000/register',
-            data: formData,
-            config: { headers: {'Content-Type': 'multipart/form-data' }}
+        requestHandler.post('/register', {
+          username: this.state.username,
+          password: this.state.password,
+          gsm: this.state.gsm
         }).then(res => {
-          console.log(res);
           this.cleanForm();
-          this.props.onOk(res);
+          this.props.onOk(res.data);
         });
       }
 
@@ -72,6 +81,16 @@ const SignUpModal = Form.create()(
                   <Input
                     placeholder='Username' 
                     onChange={e => this.onInputChange('username', e)} />
+                )}
+              </FormItem>
+              <FormItem >
+                {getFieldDecorator('gsm', {
+                  rules: [{ required: true, message: 'You forgot to enter your gsm!'}],
+                  getValueFromEvent: e => this.onInputChange('gsm', e)
+                })(
+                  <Input
+                    placeholder='+90'
+                    onChange={e => this.onInputChange('gsm', e)} />
                 )}
               </FormItem>
               <FormItem >

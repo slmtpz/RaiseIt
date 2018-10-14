@@ -1,5 +1,8 @@
 import urllib
 import os
+# Credentials for MongoDB and Twilio are asked from environment variables for security purposes.
+# You can run this command on command line after filling credentials.
+# Please check README.md, https://github.com/slmtpz/RaiseIt.
 MONGO = {
     'USERNAME': os.environ['MONGO_USERNAME'],
     'PASSWORD': urllib.parse.quote(os.environ['MONGO_PASSWORD']),

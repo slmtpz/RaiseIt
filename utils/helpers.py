@@ -6,4 +6,4 @@ def get_minimum_bid_for_posting(posting):
         minimum_bid = posting['starting_bid']
     else:
         minimum_bid = posting['current_bid'] * MINIMUM_BID_FACTOR
-    return minimum_bid
+    return int(minimum_bid)

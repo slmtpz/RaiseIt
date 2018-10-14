@@ -1,10 +1,12 @@
 import random
 from utils.area.indices import df
 
-# todo: machine learning over web scraped data or apis if available
-
 
 def generate():
+    """
+    This function is used to populate the collection with random postings.
+    """
+
     ROOMS = {1: 1, 2: 1.15, 3: 1.25, 4: 1.50}
     SALOONS = {1: 1, 2: 1.25}
     BUILDING_TYPES = {'Daire': 1, 'Residans': 1.5, 'Mustakil Ev': 2, 'Villa': 2.5}
@@ -32,7 +34,7 @@ def generate():
     size_index = size/12/5
 
     age = random.randint(0, 30)
-    age_index = 1 - age/60
+    age_index = 1 - age/80
 
     number = 500
     print('room', room)

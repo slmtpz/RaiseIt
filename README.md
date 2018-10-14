@@ -3,7 +3,7 @@
 #### Group Members: [Seleme Topuz](https://github.com/slmtpz) - [Orbay Altuntoprak](https://github.com/norubai)
 
 <p align="center">
-  <img src="https://github.com/slmtpz/RaiseIt/blob/master/raiseit.jpg?raw=true" height="100">
+  <img src="https://github.com/slmtpz/RaiseIt/blob/master/raiseit.png?raw=true" height="100">
 </p>
 
 RaiseIt is an online auction house for real estates where people can bid on postings and win auctions.

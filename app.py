@@ -1,13 +1,12 @@
 from flask import Flask, render_template, request, jsonify
-from flask_cors import CORS, cross_origin
+from flask_cors import CORS
 from services import auth, posting
-import json
-
 
 app = Flask(__name__)
 CORS(app)
 
 # todo: deposit endpoint
+# todo: redis?
 
 
 @app.route('/')
@@ -42,21 +41,23 @@ def posting_ops():
         pass
     else:
         # todo: check username-password is in db
+        # TODO: recommend starting bid !!
         username = request.headers.get('username')
 
         room = request.form.get('room', type=int)
         saloon = request.form.get('saloon', type=int)
         address = request.form.get('address', type=int)
+        lat = request.form.get('lat', type=float)
+        lng = request.form.get('lng', type=float)
         building_type = request.form.get('building_type', type=str)
         post_type = request.form.get('post_type', type=str)
         starting_bid = request.form.get('starting_bid', type=int)
         size = request.form.get('size', type=int)
-        floor = request.form.get('floor', type=int)
         age = request.form.get('age', type=int)
         expiration_time = request.form.get('expiration_time', type=int)
 
-        posting.add_posting(username, room, saloon, address, building_type, post_type, starting_bid, size,
-                            floor, age, expiration_time)
+        posting.add_posting(username, room, saloon, address, lat, lng, building_type, post_type, starting_bid, size,
+                            age, expiration_time)
 
 
 if __name__ == '__main__':

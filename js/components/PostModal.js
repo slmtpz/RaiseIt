@@ -73,7 +73,8 @@ const PostModal = Form.create()(
         })
       }
 
-      validateForm() {        
+      validateForm() {
+    
         requestHandler.post('/posting', {
             room: parseInt(this.state.room),
             saloon: parseInt(this.state.living),
@@ -83,7 +84,7 @@ const PostModal = Form.create()(
             size: parseInt(this.state.size),
             age: parseInt(this.state.age),
             username: localStorage.getItem('username'),
-            starting_bid: parseInt(initialBid)
+            starting_bid: parseInt(this.state.initialBid)
         }).then(res => {
           this.cleanForm();
           this.props.onOk(res.data);

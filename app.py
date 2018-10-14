@@ -104,6 +104,7 @@ def posting_ops():
         age = request.form.get('age', type=int)
 
         posting.add_posting(username, room, saloon, address, building_type, post_type, starting_bid, size, age)
+        return jsonify({'code': 1})
 
 
 @app.route('/raise', methods=['POST'])

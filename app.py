@@ -3,14 +3,13 @@ from flask_cors import CORS
 from services import user, posting
 from utils.notifier import Messenger
 from config import TWILIO
+from utils.area.indices import df as area_df
+
 
 app = Flask(__name__)
 CORS(app)
 
 messenger = Messenger(TWILIO['ACCOUNT_SID'], TWILIO['AUTH_TOKEN'], TWILIO['PHONE_NUMBER'])
-
-
-# todo: redis?
 
 
 @app.route('/')
@@ -49,30 +48,38 @@ def deposit_credits():
     return jsonify(response)
 
 
+@app.route('/estimate', methods=['POST'])
+def estimate_value():
+    room = request.form.get('room', type=int)
+    saloon = request.form.get('saloon', type=int)
+    address = request.form.get('address', type=str)
+    building_type = request.form.get('building_type', type=str)
+    post_type = request.form.get('post_type', type=str)
+    size = request.form.get('size', type=int)
+    age = request.form.get('age', type=int)
+
+    estimation = posting.estimate_value(room, saloon, building_type, post_type, address, size, age, area_df)
+    return jsonify({'estimation': estimation})
+
+
 @app.route('/posting', methods=['GET', 'POST'])
 def posting_ops():
     if request.method == 'GET':
         postings = posting.get_all_postings()
         return jsonify({'postings': postings})
     else:
-        # todo: check username-password is in db
-        # TODO: recommend starting bid !!
         username = request.form.get('username')
 
         room = request.form.get('room', type=int)
         saloon = request.form.get('saloon', type=int)
         address = request.form.get('address', type=int)
-        lat = request.form.get('lat', type=float)
-        lng = request.form.get('lng', type=float)
         building_type = request.form.get('building_type', type=str)
         post_type = request.form.get('post_type', type=str)
         starting_bid = request.form.get('starting_bid', type=int)
         size = request.form.get('size', type=int)
         age = request.form.get('age', type=int)
-        expiration_time = request.form.get('expiration_time', type=int)
 
-        posting.add_posting(username, room, saloon, address, lat, lng, building_type, post_type, starting_bid, size,
-                            age, expiration_time)
+        posting.add_posting(username, room, saloon, address, building_type, post_type, starting_bid, size, age)
 
 
 @app.route('/raise', methods=['POST'])

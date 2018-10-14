@@ -1,8 +1,6 @@
 import random
 from utils.area.indices import df
 
-# todo: machine learning over web scraped data or apis if available
-
 
 def generate():
     ROOMS = {1: 1, 2: 1.15, 3: 1.25, 4: 1.50}
@@ -32,7 +30,7 @@ def generate():
     size_index = size/12/5
 
     age = random.randint(0, 30)
-    age_index = 1 - age/60
+    age_index = 1 - age/80
 
     number = 500
     print('room', room)

@@ -69,6 +69,10 @@ npm run build
 ```
 npm run start
 ```
+- **NOTE: Credentials for MongoDB and Twilio are asked from environment variables for security purposes. You can run this command on command line after filling credentials.**
+```
+export TWILIO_ACCOUNT_SID=''; export TWILIO_AUTH_TOKEN=''; export TWILIO_PHONE_NUMBER=''; export MONGO_DATABASE=''; export MONGO_PASSWORD=''; export MONGO_USERNAME=''; export MONGO_HOSTPORT='';
+```
 
 ### Future Work
 - Maps support can be added to visualize postings on a map.

@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, jsonify
 from flask_cors import CORS
-from services import auth, posting
+from services import user, posting
 
 app = Flask(__name__)
 CORS(app)
@@ -21,7 +21,7 @@ def register():
     # TODO: GSM
     # todo: get_messages field ?
 
-    response = auth.register_user(username, password)
+    response = user.register_user(username, password)
     return jsonify(response)
 
 
@@ -31,13 +31,14 @@ def login():
     username = request.form.get('username', type=str)
     password = request.form.get('password', type=str)
 
-    response = auth.get_user(username, password)
+    response = user.get_user_with_pass(username, password)
     return jsonify(response)
 
 
 @app.route('/posting', methods=['GET', 'POST'])
 def posting_ops():
     if request.method == 'GET':
+        # TODO: do not fetch users own postings
         postings = posting.get_all_postings()
         return jsonify({'postings': postings})
     else:
@@ -61,5 +62,16 @@ def posting_ops():
                             age, expiration_time)
 
 
+@app.route('/raise', methods=['POST'])
+def raise_ops():
+    username = request.form.get('username', type=str)
+    bid_amount = request.form.get('bid_amount', type=int)
+    posting_id = request.form.get('posting_id', type=str)
+
+    result = posting.raise_bid_on_posting(username, bid_amount, posting_id)
+
+    return jsonify(result)
+
+
 if __name__ == '__main__':
-    app.run('0.0.0.0', 5000, debug=True)
+    app.run('0.0.0.0', 5000)

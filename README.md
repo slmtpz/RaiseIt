@@ -74,10 +74,11 @@ npm run start
 export TWILIO_ACCOUNT_SID=''; export TWILIO_AUTH_TOKEN=''; export TWILIO_PHONE_NUMBER=''; export MONGO_DATABASE=''; export MONGO_PASSWORD=''; export MONGO_USERNAME=''; export MONGO_HOSTPORT='';
 ```
 
-### Future Work
+### Future Work / Improvements
 - Tokenization can be done to keep users in sessions.
 - Maps support can be added to visualize postings on a map.
 - Localization can be done for website usage and SMS's.
 - Live auctions can be stored in *redis* for scalability.
 - Filtering future can be added for postings.
 - Finish an auction when it is expired.
+- Machine learning can be applied to estimate values better when enough data is provided.

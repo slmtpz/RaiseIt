@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
 import { Layout, Menu, Breadcrumb, Icon, Button } from 'antd';
 
+import requestHandler from './RequestHandler';
 import SignUpModal from './components/SignUpModal';
 import LoginModal from './components/LoginModal';
 const { Header, Content} = Layout;
@@ -13,8 +14,7 @@ class AppHeader extends Component {
     super(props);
     this.state = {
       loginModalVisible: false,
-      signupModalVisible: false,
-      loggedIn: false
+      signupModalVisible: false
     }
 
     this.onSignUpFormOk = this.onSignUpFormOk.bind(this);
@@ -24,36 +24,29 @@ class AppHeader extends Component {
     this.menuClicked = this.menuClicked.bind(this);
   }
 
-  onSignUpFormOk(result) {
-    this.setState({
-      signupModalVisible: false,
-      loggedIn: true
-    });
-    // REDIRECT TO HOME PAGE.
+  onSignUpFormOk(user) {
+    this.props.onUserLogin(user);
+    this.setState({ signupModalVisible: false });
   }
 
   onSignUpFormCancel() { this.setState({signupModalVisible: false}); }
 
-  onLoginFormOk(result) {
-    this.setState({
-      loginModalVisible: false,
-      loggedIn: true
-    });
-    // REDIRECT TO HOME PAGE.
+  onLoginFormOk(user) {
+    this.props.onUserLogin(user);
+    this.setState({ loginModalVisible: false });
   }
 
   onLoginFormCancel() { this.setState({loginModalVisible: false}); }
 
 
   menuClicked({item, key, keyPath}) {
-    if (key === 'signup') {console.log('set sign up visible'); this.setState({signupModalVisible: true})};
-    if (key === 'login')  {console.log('set sign up visible'); this.setState({loginModalVisible: true})};
-    if (key === 'logout') {
-      // LOG THE USER OUT
-    }
+    if (key === 'signup') { this.setState({signupModalVisible: true}) };
+    if (key === 'login')  { this.setState({loginModalVisible: true}) };
+    if (key === 'logout') { this.props.onUserLogOut() }
   }
 
   render () {
+    let user = this.props.user;
     return (
       <div>
         <Header className="header">
@@ -66,9 +59,19 @@ class AppHeader extends Component {
           >
             <Menu.Item key="1"><Link to='/'>Home</Link></Menu.Item>
             <Menu.Item key="2"><Link to='/posts'>Posts</Link></Menu.Item>
-            {!this.state.loggedIn && <Menu.Item style={{float: 'right'}} key='login'>Log In</Menu.Item> }
-            {!this.state.loggedIn && <Menu.Item style={{float: 'right'}} key='signup'>Sign Up</Menu.Item> }
-            {this.state.loggedIn && <Menu.Item style={{float: 'right'}} key='logout'>Log out</Menu.Item> }
+            {!user && <Menu.Item style={{float: 'right'}} key='login'>Log In</Menu.Item> }
+            {!user && <Menu.Item style={{float: 'right'}} key='signup'>Sign Up</Menu.Item> }
+            {user && <Menu.Item style={{float: 'right'}} key='logout'>Log out</Menu.Item> }
+            {user && <Menu.Item
+              style={{float: 'right'}}
+              key='deposit'>Deposit  <Icon type="rise" theme="outlined" />
+            </Menu.Item>}
+            {user && <Menu.Item
+              style={{float: 'right'}}
+              key='credit'>
+              Current credit: {user.credit} <Icon type="dollar" theme="outlined" />
+            </Menu.Item>}
+            {user && <Menu.Item style={{float: 'right'}} key='username'>Hello {user.username}</Menu.Item> }
           </Menu>
         </Header>
         
